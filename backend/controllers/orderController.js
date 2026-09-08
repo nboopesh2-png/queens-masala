@@ -1,6 +1,7 @@
 const Order = require('../models/Order');
 const User = require('../models/User');
 const Product = require('../models/Product');
+const mailService = require('../services/mailService');
 
 function generateOrderId() {
   return 'QM' + Date.now();
@@ -39,6 +40,13 @@ exports.createOrder = async (req, res) => {
     });
 
     await order.save();
+
+    // send order confirmation email (best-effort)
+    try {
+      await mailService.sendOrderConfirmation(user.email, order);
+    } catch (err) {
+      console.error('Email send failed', err);
+    }
 
     res.status(201).json({ order });
   } catch (err) {

@@ -7,6 +7,11 @@ import Cart from './pages/Cart'
 import Checkout from './pages/Checkout'
 import AdminProducts from './pages/AdminProducts'
 import OrderSuccess from './pages/OrderSuccess'
+import AdminOrders from './pages/AdminOrders'
+import AdminCoupons from './pages/AdminCoupons'
+import AdminReviews from './pages/AdminReviews'
+import AdminCustomers from './pages/AdminCustomers'
+import MyOrders from './pages/MyOrders'
 
 export default function App(){
   return (
@@ -23,6 +28,7 @@ export default function App(){
           <nav className="space-x-4">
             <Link to="/products">Shop</Link>
             <Link to="/cart">Cart</Link>
+            <Link to="/my-orders">My Orders</Link>
             <Link to="/admin/products">Admin</Link>
           </nav>
         </div>
@@ -35,7 +41,12 @@ export default function App(){
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/admin/products" element={<AdminProducts />} />
+          <Route path="/admin/orders" element={<AdminOrders />} />
+          <Route path="/admin/coupons" element={<AdminCoupons />} />
+          <Route path="/admin/reviews" element={<AdminReviews />} />
+          <Route path="/admin/customers" element={<AdminCustomers />} />
           <Route path="/order-success" element={<OrderSuccess />} />
+          <Route path="/my-orders" element={<MyOrders />} />
         </Routes>
       </main>
       <footer className="bg-gray-50 p-6 text-center text-sm">

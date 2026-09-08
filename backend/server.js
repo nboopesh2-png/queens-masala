@@ -10,6 +10,7 @@ const paymentRoutes = require('./routes/payment');
 const uploadRoutes = require('./routes/upload');
 const couponRoutes = require('./routes/coupons');
 const reviewRoutes = require('./routes/reviews');
+const adminRoutes = require('./routes/admin');
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use('/api/payment', paymentRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/coupons', couponRoutes);
 app.use('/api/reviews', reviewRoutes);
+app.use('/api/admin', adminRoutes);
 
 // health
 app.get('/api/health', (req, res) => res.json({ ok: true }));
