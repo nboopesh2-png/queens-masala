@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{
+  --deep-red:#7f1d1d;
+  --maroon:#5b0d0d;
+  --gold:#d4af37;
+  --cream:#fff7ed;
+}
+
+body{ background-color:var(--cream); }
