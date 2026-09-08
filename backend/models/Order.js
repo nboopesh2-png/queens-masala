@@ -22,6 +22,7 @@ const orderSchema = new mongoose.Schema({
   totalAmount: Number,
   paymentMethod: String,
   paymentStatus: { type: String, default: 'PENDING' },
+  paymentResult: { type: Object },
   shippingAddress: Object,
   orderStatus: { type: String, default: 'ORDER PLACED' },
   createdAt: { type: Date, default: Date.now },

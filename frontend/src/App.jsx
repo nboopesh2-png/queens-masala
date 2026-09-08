@@ -6,6 +6,7 @@ import ProductDetail from './pages/ProductDetail'
 import Cart from './pages/Cart'
 import Checkout from './pages/Checkout'
 import AdminProducts from './pages/AdminProducts'
+import OrderSuccess from './pages/OrderSuccess'
 
 export default function App(){
   return (
@@ -34,6 +35,7 @@ export default function App(){
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/admin/products" element={<AdminProducts />} />
+          <Route path="/order-success" element={<OrderSuccess />} />
         </Routes>
       </main>
       <footer className="bg-gray-50 p-6 text-center text-sm">

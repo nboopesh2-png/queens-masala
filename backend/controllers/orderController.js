@@ -8,7 +8,7 @@ function generateOrderId() {
 
 exports.createOrder = async (req, res) => {
   try {
-    const { items, subtotal, deliveryCharge = 0, discount = 0, totalAmount, paymentMethod, shippingAddress } = req.body;
+    const { items, subtotal, deliveryCharge = 0, discount = 0, totalAmount, paymentMethod, shippingAddress, paymentResult } = req.body;
     const user = await User.findById(req.userId);
     if (!user) return res.status(401).json({ message: 'Unauthorized' });
 
@@ -32,7 +32,8 @@ exports.createOrder = async (req, res) => {
       discount,
       totalAmount,
       paymentMethod,
-      paymentStatus: paymentMethod === 'RAZORPAY' ? 'PENDING' : 'PENDING',
+      paymentStatus: (paymentMethod === 'RAZORPAY' && paymentResult && paymentResult.razorpay_payment_id) ? 'PAID' : 'PENDING',
+      paymentResult: paymentResult || null,
       shippingAddress,
       orderStatus: 'ORDER PLACED'
     });
@@ -42,61 +43,6 @@ exports.createOrder = async (req, res) => {
     res.status(201).json({ order });
   } catch (err) {
     console.error('Create order error', err);
-    res.status(500).json({ message: 'Server error' });
-  }
-};
-
-exports.getMyOrders = async (req, res) => {
-  try {
-    const orders = await Order.find({ customer: req.userId }).sort({ createdAt: -1 });
-    res.json({ orders });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Server error' });
-  }
-};
-
-exports.getOrderById = async (req, res) => {
-  try {
-    const order = await Order.findById(req.params.id).populate('items.product').lean();
-    if (!order) return res.status(404).json({ message: 'Order not found' });
-    // authorization: owner or admin
-    if (order.customer.toString() !== req.userId) {
-      const user = await User.findById(req.userId);
-      if (!user || user.role !== 'admin') return res.status(403).json({ message: 'Access denied' });
-    }
-    res.json({ order });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Server error' });
-  }
-};
-
-exports.getAllOrders = async (req, res) => {
-  try {
-    const user = await User.findById(req.userId);
-    if (!user || user.role !== 'admin') return res.status(403).json({ message: 'Access denied' });
-    const orders = await Order.find().sort({ createdAt: -1 }).populate('customer').lean();
-    res.json({ orders });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Server error' });
-  }
-};
-
-exports.updateOrderStatus = async (req, res) => {
-  try {
-    const user = await User.findById(req.userId);
-    if (!user || user.role !== 'admin') return res.status(403).json({ message: 'Access denied' });
-    const { status } = req.body;
-    const order = await Order.findById(req.params.id);
-    if (!order) return res.status(404).json({ message: 'Order not found' });
-    order.orderStatus = status;
-    order.updatedAt = Date.now();
-    await order.save();
-    res.json({ order });
-  } catch (err) {
-    console.error(err);
     res.status(500).json({ message: 'Server error' });
   }
 };
