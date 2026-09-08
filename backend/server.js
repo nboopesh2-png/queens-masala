@@ -1,4 +1,3 @@
-require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
@@ -9,6 +8,8 @@ const productRoutes = require('./routes/products');
 const orderRoutes = require('./routes/orders');
 const paymentRoutes = require('./routes/payment');
 const uploadRoutes = require('./routes/upload');
+const couponRoutes = require('./routes/coupons');
+const reviewRoutes = require('./routes/reviews');
 
 const app = express();
 
@@ -25,6 +26,8 @@ app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/payment', paymentRoutes);
 app.use('/api/upload', uploadRoutes);
+app.use('/api/coupons', couponRoutes);
+app.use('/api/reviews', reviewRoutes);
 
 // health
 app.get('/api/health', (req, res) => res.json({ ok: true }));

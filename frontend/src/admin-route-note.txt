@@ -1,0 +1,2 @@
+import AdminProducts from './pages/AdminProducts'
+// in App Routes, add the admin route

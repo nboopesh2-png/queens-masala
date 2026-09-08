@@ -5,6 +5,7 @@ import Products from './pages/Products'
 import ProductDetail from './pages/ProductDetail'
 import Cart from './pages/Cart'
 import Checkout from './pages/Checkout'
+import AdminProducts from './pages/AdminProducts'
 
 export default function App(){
   return (
@@ -21,7 +22,7 @@ export default function App(){
           <nav className="space-x-4">
             <Link to="/products">Shop</Link>
             <Link to="/cart">Cart</Link>
-            <Link to="/admin">Admin</Link>
+            <Link to="/admin/products">Admin</Link>
           </nav>
         </div>
       </header>
@@ -32,6 +33,7 @@ export default function App(){
           <Route path="/products/:id" element={<ProductDetail />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/admin/products" element={<AdminProducts />} />
         </Routes>
       </main>
       <footer className="bg-gray-50 p-6 text-center text-sm">
